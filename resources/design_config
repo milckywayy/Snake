@@ -2,6 +2,7 @@
 cell-size = 20
 outline = 2
 score-bar-height = 70
+font-size-huge = 80
 font-size-big = 45
 font-size-medium = 35
 font-size-small = 25

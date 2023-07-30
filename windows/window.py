@@ -3,7 +3,7 @@ import sys
 
 
 class Window:
-    def __init__(self, resolution, fps, caption, start_state):
+    def __init__(self, resolution, fps, caption):
         pygame.init()
         self.clock = pygame.time.Clock()
 
@@ -13,18 +13,18 @@ class Window:
         pygame.display.set_caption(caption)
 
         self.image_library = {}
+        self.UPDATE_BG_EVENT = pygame.USEREVENT + 1
+        self.update_bg_event = pygame.event.Event(self.UPDATE_BG_EVENT)
 
-        self.state = start_state
+        self.state = None
 
     def set_state(self, state):
         self.state = state
+        pygame.event.post(self.update_bg_event)
 
     def refresh(self):
         self.update()
         self.clock.tick(self.framerate)
-
-    def get_screen(self):
-        return self.screen
 
     def get_image(self, path):
         path = get_path(path)
@@ -50,6 +50,8 @@ class Window:
     def run(self):
         while True:
             for event in pygame.event.get():
+                if event.type == self.UPDATE_BG_EVENT:
+                    self.state.draw_static_background(self)
                 self.state.handle_event(self, event)
             self.state.draw(self)
             self.update()
