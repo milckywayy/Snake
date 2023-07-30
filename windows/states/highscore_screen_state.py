@@ -6,7 +6,7 @@ from windows.interface.button import Button
 from windows.interface.text import Text
 
 
-class HighscoreScreen(WindowState):
+class HighscoreScreenState(WindowState):
     def __init__(self, window):
         self.active_color = get_color(window.get_config(), 'input-active-color')
         self.inactive_color = get_color(window.get_config(), 'input-inactive-color')
@@ -37,3 +37,6 @@ class HighscoreScreen(WindowState):
         self.title.draw(window.screen)
         self.points.draw(window.screen)
         self.text.draw(window.screen)
+
+    def reset(self, window):
+        pass

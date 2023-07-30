@@ -3,7 +3,8 @@ from enum import Enum
 
 from windows.window import Window
 from windows.states.main_menu_state import MainMenuState
-from windows.states.highscore_screen_state import HighscoreScreen
+from windows.states.highscore_screen_state import HighscoreScreenState
+from windows.states.game_state import GameState
 from sounds.sound_effects import SoundEffects
 from utils.config import read_config
 from utils.data_bank import Paths
@@ -33,8 +34,12 @@ class GameWindow(Window):
 
         self.states = {
             'main_menu': MainMenuState(self),
-            'highscore_screen': HighscoreScreen(self)}
+            'highscore_screen': HighscoreScreenState(self),
+            'game': GameState(self)}
         super().set_state(self.states['main_menu'])
 
     def get_config(self):
         return self.config
+
+    def get_cell_number(self):
+        return self.cell_number

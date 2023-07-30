@@ -13,3 +13,7 @@ class WindowState(ABC):
     @abstractmethod
     def draw_static_background(self, window):
         pass
+
+    @abstractmethod
+    def reset(self, window):
+        pass

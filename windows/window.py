@@ -13,8 +13,12 @@ class Window:
         pygame.display.set_caption(caption)
 
         self.image_library = {}
+
         self.UPDATE_BG_EVENT = pygame.USEREVENT + 1
         self.update_bg_event = pygame.event.Event(self.UPDATE_BG_EVENT)
+
+        self.RESET_WINDOW = pygame.USEREVENT + 2
+        self.reset_window = pygame.event.Event(self.RESET_WINDOW)
 
         self.state = None
 
@@ -47,11 +51,16 @@ class Window:
         pygame.display.update()
         self.clock.tick(self.fps)
 
+    def request_reset(self):
+        pygame.event.post(self.reset_window)
+
     def run(self):
         while True:
             for event in pygame.event.get():
                 if event.type == self.UPDATE_BG_EVENT:
                     self.state.draw_static_background(self)
+                elif event.type == self.UPDATE_BG_EVENT:
+                    self.state.reset(self)
                 self.state.handle_event(self, event)
             self.state.draw(self)
             self.update()

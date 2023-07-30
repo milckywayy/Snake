@@ -30,7 +30,7 @@ class MainMenuState(WindowState):
                 window.exit(0)
 
         if self.buttons[0].handle_event(event):
-            pass
+            window.set_state(window.states['game'])
         elif self.buttons[1].handle_event(event):
             window.set_state(window.states['highscore_screen'])
         elif self.buttons[2].handle_event(event):
@@ -43,3 +43,6 @@ class MainMenuState(WindowState):
     def draw_static_background(self, window):
         window.screen.fill(get_color(window.config, 'background-color'))
         self.title.draw(window.screen)
+
+    def reset(self, window):
+        pass
