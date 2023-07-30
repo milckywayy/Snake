@@ -17,7 +17,7 @@ class MainMenuState(WindowState):
                    self.bg_color, window.sfx),
             Button((65, 270), 415, 60, 'Highscore', window.font_medium, self.active_color, self.inactive_color,
                    self.bg_color, window.sfx),
-            Button((65, 460), 415, 60, 'Exit', window.font_medium, self.active_color, self.inactive_color,
+            Button((65, 460), 415, 60, 'Exit game', window.font_medium, self.active_color, self.inactive_color,
                    self.bg_color, window.sfx)]
 
         self.title = Text((window.resolution[0] / 2, 70), "Snake", window.font_huge, self.inactive_color, window.resolution[0])
@@ -25,11 +25,14 @@ class MainMenuState(WindowState):
     def handle_event(self, window, event):
         if event.type == pygame.QUIT:
             window.exit(0)
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
+                window.exit(0)
 
         if self.buttons[0].handle_event(event):
             pass
         elif self.buttons[1].handle_event(event):
-            pass
+            window.set_state(window.states['highscore_screen'])
         elif self.buttons[2].handle_event(event):
             window.exit(0)
 

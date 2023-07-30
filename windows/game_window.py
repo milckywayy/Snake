@@ -3,6 +3,7 @@ from enum import Enum
 
 from windows.window import Window
 from windows.states.main_menu_state import MainMenuState
+from windows.states.highscore_screen_state import HighscoreScreen
 from sounds.sound_effects import SoundEffects
 from utils.config import read_config
 from utils.data_bank import Paths
@@ -30,9 +31,10 @@ class GameWindow(Window):
 
         self.sfx = SoundEffects()
 
-        class State(Enum):
-            MAIN_MENU = MainMenuState(self)
-        super().set_state(State.MAIN_MENU.value)
+        self.states = {
+            'main_menu': MainMenuState(self),
+            'highscore_screen': HighscoreScreen(self)}
+        super().set_state(self.states['main_menu'])
 
     def get_config(self):
         return self.config
