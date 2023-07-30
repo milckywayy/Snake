@@ -1,0 +1,20 @@
+[Snake configuration]
+cell-size = 20
+outline = 2
+score-bar-height = 70
+font-size-big = 45
+font-size-medium = 35
+font-size-small = 25
+axis_sensitivity = 0.45
+
+font_family = CG Omega
+
+background-color = 15 25 35
+font-color = 222 50 50
+input-active-color = 255 195 5
+input-inactive-color = 222 50 50
+pause-overlay = 30 15 30 230
+snake-body-color = 240 30 40
+snake-head-color = 242 101 34
+food-color = 255 200 0
+score-bar-color = 222 50 50
