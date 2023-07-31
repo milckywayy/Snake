@@ -14,14 +14,11 @@ class Window:
 
         self.image_library = {}
 
-        self.UPDATE_BG_EVENT = pygame.USEREVENT + 1
-        self.update_bg_event = pygame.event.Event(self.UPDATE_BG_EVENT)
-
         self.state = None
 
     def set_state(self, state):
         self.state = state
-        pygame.event.post(self.update_bg_event)
+        self.state.draw_static_background(self)
 
     def refresh(self):
         self.update()
@@ -54,8 +51,6 @@ class Window:
     def run(self):
         while True:
             for event in pygame.event.get():
-                if event.type == self.UPDATE_BG_EVENT:
-                    self.state.draw_static_background(self)
                 self.state.handle_event(self, event)
             self.state.draw(self)
             self.update()

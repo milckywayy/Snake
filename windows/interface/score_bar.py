@@ -14,11 +14,11 @@ class ScoreBar:
         self.text_color = text_color
         self.text = 'Score: '
 
-        self.score_text = Text((self.width / 2, self.position[1] + height / 2), self.text, self.font, self.text_color, self.width)
+        self.score_text = Text((self.width / 2, self.position[1] + height / 2), self.text, self.font, self.text_color)
         self.background_rect = pygame.Rect(position[0], position[1], width, height)
 
     def update_render(self):
-        self.score_text.set_text(self.text + str(self.score_obj.get_points()))
+        self.score_text.set_text(self.text + str(self.score_obj.get_score()))
         self.score_text.update_render()
 
     def draw(self, screen):

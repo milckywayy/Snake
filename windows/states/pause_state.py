@@ -13,13 +13,10 @@ class PauseState(WindowState):
         self.bg_color = get_color(window.get_config(), 'background-color')
         self.pause_color = get_color(window.get_config(), 'pause-overlay')
 
-        self.buttons = [
-            Button((65, 220), 415, 60, 'Resume', window.font_medium, self.active_color, self.inactive_color,
-                   self.bg_color, window.sfx),
-            Button((65, 460), 415, 60, 'Menu', window.font_medium, self.active_color, self.inactive_color,
-                   self.bg_color, window.sfx)]
+        self.buttons = [Button((65, 220), 415, 60, 'Resume', window.font_medium, self.active_color, self.inactive_color, self.bg_color, window.sfx),
+                        Button((65, 460), 415, 60, 'Main menu', window.font_medium, self.active_color, self.inactive_color,  self.bg_color, window.sfx)]
 
-        self.title = Text((window.resolution[0] / 2, 115), "Paused", window.font_huge, self.inactive_color, window.resolution[0])
+        self.title = Text((window.resolution[0] / 2, 115), "Paused", window.font_huge, self.inactive_color)
 
     def handle_event(self, window, event):
         if event.type == pygame.QUIT:
@@ -27,10 +24,10 @@ class PauseState(WindowState):
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 window.set_state(window.states['game'])
-
         if self.buttons[0].handle_event(event):
             window.set_state(window.states['game'])
         elif self.buttons[1].handle_event(event):
+            window.states['game'].reset(window)
             window.set_state(window.states['main_menu'])
 
     def draw(self, window):
@@ -38,8 +35,6 @@ class PauseState(WindowState):
             button.draw(window.screen)
 
     def draw_static_background(self, window):
-        # window.screen.fill(get_color(window.config, 'background-color'))
-
         overlay = pygame.Surface(window.resolution).convert_alpha()
         overlay.fill(self.pause_color)
         window.screen.blit(overlay, (0, 0))

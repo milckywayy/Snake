@@ -41,9 +41,7 @@ class GameState(WindowState):
             window.exit(0)
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE or event.key == pygame.K_p:
-                pygame.time.set_timer(self.snake_move, 0)
                 window.set_state(window.states['pause'])
-                pygame.time.set_timer(self.snake_move, 100)
             elif event.key == pygame.K_w or event.key == pygame.K_UP:
                 if self.direction[-1] != 0 and self.direction[-1] != 2 and len(self.direction) < 3:
                     self.direction.append(0)
@@ -58,21 +56,7 @@ class GameState(WindowState):
                     self.direction.append(3)
         elif event.type == self.SNAKE_MOVE:
             self.snake.move(self.direction[0])
-            if len(self.direction) > 1:
-                self.direction.pop(0)
-            if self.snake.get_head().get_position() == self.apple.get_position():
-                window.sfx.play_sound('eat')
-                window.score.add_point()
-                pygame.event.post(window.update_bg_event)
-                self.apple.eaten()
-                while self.apple in self.snake.get_whole_body():
-                    self.apple.eaten()
-                self.snake.grow()
-            elif self.snake.get_head() in self.snake.get_body():
-                # TODO lost screen
-                window.score.reset()
-                self.reset(window)
-            elif self.snake.get_head().get_position()[0] >= window.get_cell_number():
+            if self.snake.get_head().get_position()[0] >= window.get_cell_number():
                 self.snake.get_head().set_position([0, self.snake.get_head().get_position()[1]])
             elif self.snake.get_head().get_position()[0] < 0:
                 self.snake.get_head().set_position(
@@ -82,6 +66,20 @@ class GameState(WindowState):
             elif self.snake.get_head().get_position()[1] < 0:
                 self.snake.get_head().set_position(
                     [self.snake.get_head().get_position()[0], window.get_cell_number() - 1])
+
+            if len(self.direction) > 1:
+                self.direction.pop(0)
+            if self.snake.get_head().get_position() == self.apple.get_position():
+                window.sfx.play_sound('eat')
+                window.score.add_point()
+                self.apple.eaten()
+                while self.apple in self.snake.get_whole_body():
+                    self.apple.eaten()
+                self.snake.grow()
+                self.draw_static_background(window)
+            elif self.snake.get_head() in self.snake.get_body():
+                self.reset(window)
+                window.set_state(window.states['lost'])
 
     def draw(self, window):
         pygame.draw.rect(window.screen, get_color(window.config, 'background-color'), self.background_rect)
