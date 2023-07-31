@@ -18,4 +18,9 @@ class Text:
         self.text_rendered = self.render()
 
     def draw(self, screen):
-        screen.blit(self.text_rendered, (self.position[0] - self.text_rendered.get_width() / 2, self.position[1]))
+        screen.blit(self.text_rendered, (self.position[0] - self.text_rendered.get_width() / 2,
+                                         self.position[1] - self.text_rendered.get_height() / 2))
+
+    def draw_n_render(self, screen):
+        self.update_render()
+        self.draw(screen)

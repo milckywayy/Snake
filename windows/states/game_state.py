@@ -4,6 +4,7 @@ from windows.states.window_state import WindowState
 from utils.config import get_color
 from windows.interface.button import Button
 from windows.interface.text import Text
+from windows.interface.score_bar import ScoreBar
 
 from entities.snake import Snake
 from entities.apple import Apple
@@ -16,14 +17,20 @@ class GameState(WindowState):
         self.inactive_color = get_color(window.get_config(), 'input-inactive-color')
         self.bg_color = get_color(window.get_config(), 'background-color')
 
+        self.background_rect = pygame.Rect(0, 0, window.resolution[0], window.resolution[1] - int(window.get_config()['score-bar-height']))
+
         self.snake = Snake((12, 12), 3, 0,
                            get_color(window.get_config(), 'snake-body-color'),
                            get_color(window.get_config(), 'snake-head-color'),
                            int(window.get_config()['cell-size']), int(window.get_config()['outline']))
+
         self.apple = Apple(int(window.get_config()['cell-size']), int(window.get_config()['outline']),
                            get_color(window.get_config(), 'food-color'), window.get_cell_number())
 
-        self.SNAKE_MOVE = pygame.USEREVENT + 3
+        self.score_bar = ScoreBar(window.score, (0, window.get_cell_number() * int(window.get_config()['cell-size']) + (window.get_cell_number() + 1) * int(window.get_config()['outline'])),
+                                  window.resolution[0], int(window.get_config()['score-bar-height']), self.inactive_color, window.font_medium, self.bg_color)
+
+        self.SNAKE_MOVE = pygame.USEREVENT + 2
         self.snake_move = pygame.event.Event(self.SNAKE_MOVE)
         pygame.time.set_timer(self.snake_move, 100)
 
@@ -35,7 +42,7 @@ class GameState(WindowState):
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE or event.key == pygame.K_p:
                 pygame.time.set_timer(self.snake_move, 0)
-                # TODO pause screen
+                window.set_state(window.states['pause'])
                 pygame.time.set_timer(self.snake_move, 100)
             elif event.key == pygame.K_w or event.key == pygame.K_UP:
                 if self.direction[-1] != 0 and self.direction[-1] != 2 and len(self.direction) < 3:
@@ -55,16 +62,16 @@ class GameState(WindowState):
                 self.direction.pop(0)
             if self.snake.get_head().get_position() == self.apple.get_position():
                 window.sfx.play_sound('eat')
-                # TODO add point
+                window.score.add_point()
+                pygame.event.post(window.update_bg_event)
                 self.apple.eaten()
                 while self.apple in self.snake.get_whole_body():
                     self.apple.eaten()
                 self.snake.grow()
             elif self.snake.get_head() in self.snake.get_body():
                 # TODO lost screen
-                # TODO reset score
-                self.apple.eaten()
-                self.snake.die()
+                window.score.reset()
+                self.reset(window)
             elif self.snake.get_head().get_position()[0] >= window.get_cell_number():
                 self.snake.get_head().set_position([0, self.snake.get_head().get_position()[1]])
             elif self.snake.get_head().get_position()[0] < 0:
@@ -77,12 +84,17 @@ class GameState(WindowState):
                     [self.snake.get_head().get_position()[0], window.get_cell_number() - 1])
 
     def draw(self, window):
-        window.screen.fill(get_color(window.config, 'background-color'))
+        pygame.draw.rect(window.screen, get_color(window.config, 'background-color'), self.background_rect)
         self.snake.draw(window.screen)
         self.apple.draw(window.screen)
 
     def draw_static_background(self, window):
-        pass
+        self.score_bar.render_n_draw(window.screen)
 
     def reset(self, window):
-        pass
+        self.snake.die()
+        self.apple.eaten()
+        self.direction = [0]
+        window.score.reset()
+
+        self.draw_static_background(window)

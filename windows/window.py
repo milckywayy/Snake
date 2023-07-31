@@ -17,9 +17,6 @@ class Window:
         self.UPDATE_BG_EVENT = pygame.USEREVENT + 1
         self.update_bg_event = pygame.event.Event(self.UPDATE_BG_EVENT)
 
-        self.RESET_WINDOW = pygame.USEREVENT + 2
-        self.reset_window = pygame.event.Event(self.RESET_WINDOW)
-
         self.state = None
 
     def set_state(self, state):
@@ -59,8 +56,6 @@ class Window:
             for event in pygame.event.get():
                 if event.type == self.UPDATE_BG_EVENT:
                     self.state.draw_static_background(self)
-                elif event.type == self.UPDATE_BG_EVENT:
-                    self.state.reset(self)
                 self.state.handle_event(self, event)
             self.state.draw(self)
             self.update()

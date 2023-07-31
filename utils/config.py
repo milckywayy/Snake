@@ -5,11 +5,19 @@ from utils.data_bank import Paths
 
 
 def create_config():
-    with open(str(Paths.DESIGN_CONFIG_LOCAL_DIRECTORY.value), "r") as f:
-        config = f.read()
+    if not os.path.isfile(Paths.DESIGN_CONFIG_DIRECTORY.value):
+        with open(str(Paths.DESIGN_CONFIG_LOCAL_DIRECTORY.value), "r") as f:
+            config = f.read()
 
-    with open(str(Paths.DESIGN_CONFIG_DIRECTORY.value), "w") as f:
-        f.write(config)
+        with open(str(Paths.DESIGN_CONFIG_DIRECTORY.value), "w") as f:
+            f.write(config)
+
+    if not os.path.isfile(Paths.DESIGN_CONFIG_DIRECTORY.value):
+        with open(str(Paths.DESIGN_CONFIG_LOCAL_DIRECTORY.value), "r") as f:
+            config = f.read()
+
+        with open(str(Paths.GAMEPLAY_CONFIG_DIRECTORY.value), "w") as f:
+            f.write(config)
 
 
 def read_config():

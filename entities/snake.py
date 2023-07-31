@@ -55,7 +55,7 @@ class Snake:
     def die(self):
         self.direction = self.direction_default
 
-        self.body = [Cell(self.position_default, self.body_color, cell_size, outline_size) for _ in range(self.length_default)]
+        self.body = [Cell(self.position_default, self.body_color, self.cell_size, self.outline_size) for _ in range(self.length_default)]
         self.body[0].set_color(self.head_color)
 
     def draw(self, screen):

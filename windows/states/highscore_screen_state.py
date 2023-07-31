@@ -14,9 +14,9 @@ class HighscoreScreenState(WindowState):
 
         self.buttons = [Button((65, 460), 415, 60, 'Exit', window.font_medium, self.active_color, self.inactive_color, self.bg_color, window.sfx)]
 
-        self.title = Text((window.resolution[0] / 2, 70), "Highscore", window.font_huge, self.inactive_color, window.resolution[0])
-        self.points = Text((window.resolution[0] / 2, 240), "You've got xxx points!", window.font_medium, self.inactive_color, window.resolution[0])
-        self.text = Text((window.resolution[0] / 2, 290), "On dd-mm-yyyy", window.font_medium, self.inactive_color, window.resolution[0])
+        self.title = Text((window.resolution[0] / 2, 115), "Highscore", window.font_huge, self.inactive_color, window.resolution[0])
+        self.points = Text((window.resolution[0] / 2, 250), "You've got xxx points!", window.font_medium, self.inactive_color, window.resolution[0])
+        self.text = Text((window.resolution[0] / 2, 300), "On dd-mm-yyyy", window.font_medium, self.inactive_color, window.resolution[0])
 
     def handle_event(self, window, event):
         if event.type == pygame.QUIT:

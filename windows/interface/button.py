@@ -1,6 +1,9 @@
 import pygame
 
 
+
+# TODO use text class
+
 class Button:
     def __init__(self, position, width, height, text, font, active_color, inactive_color, bg_color, sfx):
         self.rect = pygame.Rect(position[0], position[1], width, height)

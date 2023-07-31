@@ -4,9 +4,11 @@ from enum import Enum
 from windows.window import Window
 from windows.states.main_menu_state import MainMenuState
 from windows.states.highscore_screen_state import HighscoreScreenState
+from windows.states.pause_state import PauseState
 from windows.states.game_state import GameState
 from sounds.sound_effects import SoundEffects
 from utils.config import read_config
+from player.score import Score
 from utils.data_bank import Paths
 
 
@@ -30,12 +32,14 @@ class GameWindow(Window):
         self.font_medium = pygame.font.Font(str(Paths.FONT_LOCAL_DIRECTORY.value), int(self.config['font-size-medium']))
         self.font_small = pygame.font.Font(str(Paths.FONT_LOCAL_DIRECTORY.value), int(self.config['font-size-small']))
 
+        self.score = Score()
         self.sfx = SoundEffects()
 
         self.states = {
             'main_menu': MainMenuState(self),
             'highscore_screen': HighscoreScreenState(self),
-            'game': GameState(self)}
+            'game': GameState(self),
+            'pause': PauseState(self)}
         super().set_state(self.states['main_menu'])
 
     def get_config(self):
