@@ -1,3 +1,5 @@
+import math
+
 import pygame
 
 from windows.states.window_state import WindowState
@@ -30,11 +32,17 @@ class GameState(WindowState):
         self.score_bar = ScoreBar(window.score, (0, window.get_cell_number() * int(window.get_config()['cell-size']) + (window.get_cell_number() + 1) * int(window.get_config()['outline'])),
                                   window.resolution[0], int(window.get_config()['score-bar-height']), self.inactive_color, window.font_medium, self.bg_color)
 
-        self.SNAKE_MOVE = pygame.USEREVENT + 2
+        self.SNAKE_MOVE = pygame.USEREVENT + 1
         self.snake_move = pygame.event.Event(self.SNAKE_MOVE)
-        pygame.time.set_timer(self.snake_move, 100)
+        pygame.time.set_timer(self.snake_move, self.speed_fun(window.score.get_score()))
 
         self.direction = [0]
+
+    def speed_fun(self, x):
+        if x < 100:
+            return round((-1/250) * math.pow(x, 2) + 100)
+        else:
+            return 60
 
     def handle_event(self, window, event):
         if event.type == pygame.QUIT:
@@ -76,6 +84,7 @@ class GameState(WindowState):
                 while self.apple in self.snake.get_whole_body():
                     self.apple.eaten()
                 self.snake.grow()
+                pygame.time.set_timer(self.snake_move, self.speed_fun(window.score.get_score()))
                 self.draw_static_background(window)
             elif self.snake.get_head() in self.snake.get_body():
                 self.reset(window)
@@ -94,5 +103,6 @@ class GameState(WindowState):
         self.apple.eaten()
         self.direction = [0]
         window.score.reset()
+        pygame.time.set_timer(self.snake_move, self.speed_fun(0))
 
         self.draw_static_background(window)

@@ -13,10 +13,10 @@ class PauseState(WindowState):
         self.bg_color = get_color(window.get_config(), 'background-color')
         self.pause_color = get_color(window.get_config(), 'pause-overlay')
 
-        self.buttons = [Button((65, 220), 415, 60, 'Resume', window.font_medium, self.active_color, self.inactive_color, self.bg_color, window.sfx),
+        self.buttons = [Button((65, 235), 415, 60, 'Resume', window.font_medium, self.active_color, self.inactive_color, self.bg_color, window.sfx),
                         Button((65, 460), 415, 60, 'Main menu', window.font_medium, self.active_color, self.inactive_color,  self.bg_color, window.sfx)]
 
-        self.title = Text((window.resolution[0] / 2, 115), "Paused", window.font_huge, self.inactive_color)
+        self.title = Text((window.resolution[0] / 2, 160), "Paused", window.font_huge, self.inactive_color)
 
     def handle_event(self, window, event):
         if event.type == pygame.QUIT:
