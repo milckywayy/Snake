@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 
 
 class WindowState(ABC):
+
     @abstractmethod
     def handle_event(self, window, event):
         pass
@@ -16,4 +17,12 @@ class WindowState(ABC):
 
     @abstractmethod
     def reset(self, window):
+        pass
+
+    @abstractmethod
+    def play_sound(self, window):
+        pass
+
+    @abstractmethod
+    def pause_sound(self, window):
         pass

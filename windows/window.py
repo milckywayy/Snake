@@ -17,8 +17,11 @@ class Window:
         self.state = None
 
     def set_state(self, state):
+        if self.state is not None:
+            self.state.pause_sound(self)
         self.state = state
         self.state.draw_static_background(self)
+        self.state.play_sound(self)
 
     def refresh(self):
         self.update()

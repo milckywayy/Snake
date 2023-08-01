@@ -26,7 +26,7 @@ class GameWindow(Window):
                               + (int(self.config['outline']) * (self.cell_number + 1)
                                  + int(self.config['score-bar-height'])))
 
-        super().__init__((self.window_width, self.window_height), 60, "Snake alpha")
+        super().__init__((self.window_width, self.window_height), 60, "Snake 1.0")
 
         self.font_huge = pygame.font.Font(str(Paths.FONT_LOCAL_DIRECTORY.value), int(self.config['font-size-huge']))
         self.font_big = pygame.font.Font(str(Paths.FONT_LOCAL_DIRECTORY.value), int(self.config['font-size-big']))

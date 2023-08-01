@@ -46,3 +46,9 @@ class MainMenuState(WindowState):
 
     def reset(self, window):
         pass
+
+    def play_sound(self, window):
+        window.sfx.play_music('menu_music')
+
+    def pause_sound(self, window):
+        window.sfx.pause_music()

@@ -11,8 +11,13 @@ class SoundEffects:
         self.music_channel = pygame.mixer.Channel(0)
 
         self.sfx = {}
+        # for file in os.listdir(self.path):
+        #     self.sfx[os.path.basename(file).replace('.mp3', '')] = pygame.mixer.Sound(self.path + '/' + file)
+
         for file in os.listdir(self.path):
-            self.sfx[os.path.basename(file).replace('.mp3', '')] = pygame.mixer.Sound(self.path + file)
+            if file.lower().endswith('.mp3') or file.lower().endswith('.wav') or file.lower().endswith('.ogg'):
+                sound_name = os.path.splitext(file)[0]
+                self.sfx[sound_name] = pygame.mixer.Sound(os.path.join(self.path, file))
 
     def play_sound(self, sound_name):
         if sound_name in self.sfx:
@@ -20,13 +25,16 @@ class SoundEffects:
 
     def play_music(self, music_name):
         if music_name in self.sfx:
-            self.music_channel.play(self.sfx[music_name], -1)
+            if self.music_channel.get_sound() == self.sfx[music_name]:
+                self.music_channel.unpause()
+            else:
+                self.music_channel.play(self.sfx[music_name], -1)
 
     def pause_music(self):
         self.music_channel.pause()
 
-    def unpause_music(self):
-        self.music_channel.unpause()
+    def stop_music(self):
+        self.music_channel.stop()
 
     def is_music_playing(self):
         return self.music_channel.get_busy()

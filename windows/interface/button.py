@@ -2,8 +2,6 @@ import pygame
 
 from windows.interface.text import Text
 
-# TODO use text class
-
 
 class Button:
     def __init__(self, position, width, height, text, font, active_color, inactive_color, bg_color, sfx):
@@ -20,7 +18,6 @@ class Button:
 
     def handle_event(self, event):
         if self.rect.collidepoint(pygame.mouse.get_pos()):
-            self.sfx.play_sound('click')
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 self.sfx.play_sound('click')
                 return True

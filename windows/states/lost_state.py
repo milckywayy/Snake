@@ -54,3 +54,9 @@ class LostState(WindowState):
 
     def reset(self, window):
         pass
+
+    def play_sound(self, window):
+        window.sfx.play_sound("lost")
+
+    def pause_sound(self, window):
+        pass

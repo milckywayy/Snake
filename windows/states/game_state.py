@@ -99,6 +99,7 @@ class GameState(WindowState):
         self.score_bar.render_n_draw(window.screen)
 
     def reset(self, window):
+        window.sfx.stop_music()
         self.snake.die()
         self.apple.eaten()
         self.direction = [0]
@@ -106,3 +107,12 @@ class GameState(WindowState):
         pygame.time.set_timer(self.snake_move, self.speed_fun(0))
 
         self.draw_static_background(window)
+
+    def play_sound(self, window):
+        if window.sfx.is_music_playing():
+            window.sfx.play_music('game_music')
+        else:
+            window.sfx.play_music('game_music')
+
+    def pause_sound(self, window):
+        window.sfx.pause_music()
