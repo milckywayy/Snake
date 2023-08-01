@@ -7,6 +7,7 @@ from windows.states.highscore_screen_state import HighscoreScreenState
 from windows.states.pause_state import PauseState
 from windows.states.game_state import GameState
 from windows.states.lost_state import LostState
+from windows.states.options_state import OptionsState
 from sounds.sound_effects import SoundEffects
 from utils.config import read_config
 from player.score import Score
@@ -41,7 +42,8 @@ class GameWindow(Window):
             'highscore_screen': HighscoreScreenState(self),
             'game': GameState(self),
             'pause': PauseState(self),
-            'lost': LostState(self)}
+            'lost': LostState(self),
+            'options': OptionsState(self)}
         super().set_state(self.states['main_menu'])
 
     def get_config(self):

@@ -10,6 +10,9 @@ class Text:
     def set_text(self, text):
         self.text = text
 
+    def set_position(self, position):
+        self.position = position
+
     def render(self):
         return self.font.render(self.text, True, self.color)
 

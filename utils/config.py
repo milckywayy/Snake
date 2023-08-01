@@ -19,6 +19,10 @@ def create_config():
         with open(str(Paths.GAMEPLAY_CONFIG_DIRECTORY.value), "w") as f:
             f.write(config)
 
+    if not os.path.isfile(Paths.SOUND_VOLUME_DIRECTORY.value):
+        with open(str(Paths.SOUND_VOLUME_DIRECTORY.value), "w") as f:
+            f.write("1")
+
 
 def read_config():
     path = str(Paths.DESIGN_CONFIG_DIRECTORY.value)

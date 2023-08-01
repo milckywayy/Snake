@@ -17,6 +17,8 @@ class MainMenuState(WindowState):
                    self.bg_color, window.sfx),
             Button((65, 270), 415, 60, 'Highscore', window.font_medium, self.active_color, self.inactive_color,
                    self.bg_color, window.sfx),
+            Button((65, 350), 415, 60, 'Options', window.font_medium, self.active_color, self.inactive_color,
+                   self.bg_color, window.sfx),
             Button((65, 460), 415, 60, 'Exit game', window.font_medium, self.active_color, self.inactive_color,
                    self.bg_color, window.sfx)]
 
@@ -34,6 +36,8 @@ class MainMenuState(WindowState):
         elif self.buttons[1].handle_event(event):
             window.set_state(window.states['highscore_screen'])
         elif self.buttons[2].handle_event(event):
+            window.set_state(window.states['options'])
+        elif self.buttons[3].handle_event(event):
             window.exit(0)
 
     def draw(self, window):

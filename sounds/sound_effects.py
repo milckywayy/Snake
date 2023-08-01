@@ -2,6 +2,7 @@ import pygame
 import os
 
 from utils.data_bank import Paths
+from utils.sound_reader import write_sound_value, read_sound_value
 
 
 class SoundEffects:
@@ -11,13 +12,11 @@ class SoundEffects:
         self.music_channel = pygame.mixer.Channel(0)
 
         self.sfx = {}
-        # for file in os.listdir(self.path):
-        #     self.sfx[os.path.basename(file).replace('.mp3', '')] = pygame.mixer.Sound(self.path + '/' + file)
-
         for file in os.listdir(self.path):
             if file.lower().endswith('.mp3') or file.lower().endswith('.wav') or file.lower().endswith('.ogg'):
                 sound_name = os.path.splitext(file)[0]
                 self.sfx[sound_name] = pygame.mixer.Sound(os.path.join(self.path, file))
+                self.sfx[sound_name].set_volume(read_sound_value())
 
     def play_sound(self, sound_name):
         if sound_name in self.sfx:
@@ -38,6 +37,14 @@ class SoundEffects:
 
     def is_music_playing(self):
         return self.music_channel.get_busy()
+
+    def get_volume(self):
+        return float(read_sound_value())
+
+    def set_volume(self, volume):
+        for sound in self.sfx.values():
+            sound.set_volume(volume)
+        write_sound_value(volume)
 
     def toggle_music(self):
         if self.music_channel.get_volume() <= 0.1:

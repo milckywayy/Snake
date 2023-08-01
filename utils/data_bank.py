@@ -8,6 +8,7 @@ class Paths(Enum):
     USERPROFILE_GAME_DIRECTORY = os.path.join(str(USERPROFILE_DIRECTORY), 'Documents\\Snake')
     DESIGN_CONFIG_DIRECTORY = os.path.join(str(USERPROFILE_DIRECTORY), 'Documents\\Snake\\design_config.cfg')
     GAMEPLAY_CONFIG_DIRECTORY = os.path.join(str(USERPROFILE_DIRECTORY), 'Documents\\Snake\\gameplay_config.cfg')
+    SOUND_VOLUME_DIRECTORY = os.path.join(str(USERPROFILE_DIRECTORY), 'Documents\\Snake\\sound_volume.cfg')
     HIGHSCORE_DIRECTORY = os.path.join(str(USERPROFILE_GAME_DIRECTORY), 'highscore.txt')
 
     SFX_LOCAL_DIRECTORY = 'resources/sfx'
